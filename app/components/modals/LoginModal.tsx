@@ -1,26 +1,27 @@
 "use client";
 
-import { signIn } from "next-auth/react";
-import axios from "axios";
-import { AiFillGithub } from "react-icons/ai";
-import { FcGoogle } from "react-icons/fc";
 import { useCallback, useState } from "react";
+import { toast } from "react-hot-toast";
+import { signIn } from "next-auth/react";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { FcGoogle } from "react-icons/fc";
+import { AiFillGithub } from "react-icons/ai";
+import { useRouter } from "next/navigation";
 
 import useRegisterModal from "@/app/hooks/useRegistrationModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
 
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Modal from "./Modal";
-import Heading from "../Heading";
 import Input from "../inputs/Input";
-import toast from "react-hot-toast";
+import Heading from "../Heading";
 import Button from "../Button";
-import { useRouter } from "next/navigation";
 
 const LoginModal = () => {
   const router = useRouter();
+
   const RegisterModal = useRegisterModal();
   const LoginModal = useLoginModal();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -51,10 +52,15 @@ const LoginModal = () => {
 
       if (callback?.error) {
         toast.error(callback.error);
-        console.log("login error", callback.error);
+        // console.log("login error", callback.error);
       }
     });
   };
+
+  const toggle = useCallback(() => {
+    LoginModal.onclose();
+    RegisterModal.onOpen();
+  }, [LoginModal, RegisterModal]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -83,24 +89,24 @@ const LoginModal = () => {
   );
 
   const footerContent = (
-    <div className="flex flex-col gap-4 mt-3">
+    <div className="flex flex-col gap-4 mt-2 w-full">
       <hr />
       <Button
         outline
         label={"Continue with Google"}
         icon={FcGoogle}
-        onClick={() => {}}
+        onClick={() => signIn("google")}
       />
       <Button
         outline
         label={"Continue with Github"}
         icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn("github")}
       />
-      <div className="text-neutral-500 text-center mt-4 font-light">
+      <div className=" flex gap-2 justify-center text-neutral-500 text-center mt-4 font-light">
         <div>Don't have an account?</div>
         <div
-          onClick={RegisterModal.onclose}
+          onClick={toggle}
           className="
         text-neutral-800
         cursor-pointer
