@@ -66,7 +66,7 @@ const LoginModal = () => {
     <div className="flex flex-col gap-4">
       <Heading
         title="Welcome back to HomeHaven"
-        subtitle=" Login to your account!"
+        subtitle=" Login to your account"
       />
       <Input
         id="email"
@@ -104,7 +104,7 @@ const LoginModal = () => {
         onClick={() => signIn("github")}
       />
       <div className=" flex gap-2 justify-center text-neutral-500 text-center mt-4 font-light">
-        <div>Don't have an account?</div>
+        <div>Don&apos;t have an account?</div>
         <div
           onClick={toggle}
           className="
