@@ -104,7 +104,8 @@ const LoginModal = () => {
         onClick={() => signIn("github")}
       />
       <div className=" flex gap-2 justify-center text-neutral-500 text-center mt-4 font-light">
-        <div>Don&apos;t have an account?</div>
+        <div>{`Don't have an account?`}</div>
+
         <div
           onClick={toggle}
           className="
